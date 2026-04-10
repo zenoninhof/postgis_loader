@@ -25,6 +25,7 @@ Get-Content $envPath | ForEach-Object {
     }
 }
 
+
 # -----------------------------
 # Montar string de conexão
 # -----------------------------
@@ -51,8 +52,10 @@ if ($Srid -ne "") {
 # se isso acontecer só forçar como multipolygon  usanto a linha de baixo.
 # -----------------------------
 
-#    -nlt MULTIPOLYGON `
+ #   -nlt MULTIPOLYGON `
     -lco SPATIAL_INDEX=GIST `
     -overwrite `
     -progress `
     @sridArg
+
+
