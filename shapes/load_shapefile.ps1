@@ -5,9 +5,19 @@ param (
     [Parameter(Mandatory = $true)]
     [string]$Table,
 
-    [string]$Schema = "public",
+    [string]$Schema,
+
     [string]$Srid = ""
 )
+
+# -----------------------------
+# Input manual do schema (Opção 2)
+# -----------------------------
+if (-not $Schema) {
+    $Schema = Read-Host "Informe o schema de destino"
+}
+
+Write-Host "Destino: $Schema.$Table"
 
 # -----------------------------
 # Carregar variáveis do .env
@@ -25,7 +35,6 @@ Get-Content $envPath | ForEach-Object {
     }
 }
 
-
 # -----------------------------
 # Montar string de conexão
 # -----------------------------
@@ -42,20 +51,16 @@ if ($Srid -ne "") {
 # -----------------------------
 # Executar ogr2ogr
 # -----------------------------
-& "C:\Program Files\QGIS 3.40.1\bin\ogr2ogr.exe" `
-    -f "PostgreSQL" `
-    $pgConn `
-    $Shapefile `
-    -nln "$Schema.$Table" `
-# -----------------------------
-# As vezes o ogr buga e identifica multipolygon como polygon ai não sobe a planilha
-# se isso acontecer só forçar como multipolygon  usanto a linha de baixo.
-# -----------------------------
+$ogrArgs = @(
+    "-f", "PostgreSQL",
+    "-nlt", "PROMOTE_TO_MULTI",
+    "-lco", "SPATIAL_INDEX=GIST",
+    "-lco", "GEOMETRY_NAME=geom",
+    "-overwrite",
+    "-progress",
+    "-nln", "$Schema.$Table",
+    $pgConn,
+    $Shapefile
+) + $sridArg
 
- #   -nlt MULTIPOLYGON `
-    -lco SPATIAL_INDEX=GIST `
-    -overwrite `
-    -progress `
-    @sridArg
-
-
+& "C:\Program Files\QGIS 3.44.6\bin\ogr2ogr.exe" @ogrArgs

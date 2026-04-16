@@ -118,4 +118,3 @@ def copy_csv_to_postgres(csv_path, table_name):
 
 # EXECUÇÃO
 copy_csv_to_postgres(CSV_PATH, "volume_trafego_praca_pedagio_2024")
-eai cara- ===
