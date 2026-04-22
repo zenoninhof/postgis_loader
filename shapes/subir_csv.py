@@ -9,7 +9,7 @@ env_path = r"C:\Users\zeno.filho\projetos\python_secrets_lib\.env"
 load_dotenv(dotenv_path=env_path)
 
 # Caminho fixo do CSV
-CSV_PATH = r"C:\Users\zeno.filho\Downloads\volume-trafego-praca-pedagio-2024.csv"
+CSV_PATH = r"C:\Users\zeno.filho\Downloads\Matriz_Rodo_Eixo_V2.csv"
 
 
 def infer_type(value):
@@ -33,7 +33,7 @@ def infer_type(value):
     return "TEXT"
 
 
-def infer_schema(csv_path, sample_size=100):
+def infer_schema(csv_path, sample_size=1000):
     with open(csv_path, "r", encoding="utf-8") as f:
         reader = csv.reader(f)
         headers = next(reader)
@@ -117,4 +117,5 @@ def copy_csv_to_postgres(csv_path, table_name):
 
 
 # EXECUÇÃO
-copy_csv_to_postgres(CSV_PATH, "volume_trafego_praca_pedagio_2024")
+copy_csv_to_postgres(CSV_PATH, "tbl_mtx_veic_comercial")
+

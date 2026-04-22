@@ -41,4 +41,4 @@ def csv_to_fma(input_csv, output_fma, delimiter=","):
 
 
 if __name__ == "__main__":
-    csv_to_fma("C:\\Users\\zeno.filho\\Downloads\\vw_mtx_pessoas_auto_seed_202604101030.csv", "C:\\Users\\zeno.filho\\Downloads\\matriz2023calib.fma")
+    csv_to_fma(r"C:\Users\zeno.filho\Downloads\matriz_od_comercial_pesado_202604171333.csv", r"C:\Users\zeno.filho\Downloads\matrizcomercialpesado.fma")
